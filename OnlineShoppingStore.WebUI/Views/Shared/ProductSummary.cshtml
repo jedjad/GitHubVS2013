@@ -1,0 +1,24 @@
+﻿@model OnlineShoppingStore.Domain.Entities.Product
+
+@*this is the page for each individiual product in the list*@
+@*here also resides the add to cart button*@
+@*this is a partial view being used by /Product/List to display a list of products*@
+@*Products class was obtained via ProductListViewModel model, in which it contains IEnumerable<Product> Products*@
+
+<div class="well">
+    <h3>
+        <strong>@Model.Name</strong>
+        <span class="pull-right label label-primary">@Model.Price.ToString("c")</span>
+    </h3>
+    @using (Html.BeginForm("AddToCart", "Cart"))
+    {                                               @*sends ProductID and a returnUrl value to AddtoCart method from CartController*@
+        <div class="pull-right">
+            @Html.HiddenFor(x => x.ProductID)                                      @*Product Model, it has direct access to it via the model passed to this view*@
+            @*HiddenFor is an Html.Hidden variant*@
+            @Html.Hidden("returnUrl", Request.Url.PathAndQuery)                  @*<input type="returnUrl" value=Request.Url.PathAndQuery />, returnUrl property came from CartIndexViewModel*@
+            @*we are not using HiddenFor because we don't have a direct access to returnUrl Property*@
+            <input type="submit" class="btn btn-success" value="Add to Cart" />
+        </div>
+    }
+    <span class="lead">@Model.Description</span>
+</div>

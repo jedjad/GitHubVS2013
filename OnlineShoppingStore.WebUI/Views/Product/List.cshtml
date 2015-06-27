@@ -1,0 +1,19 @@
+﻿@model OnlineShoppingStore.WebUI.Models.ProductsListViewModel
+
+@{
+    ViewBag.Title = "Products";
+}
+
+@*ProductSummary holds the template for each product in the list*@
+
+
+@foreach (var p in Model.Products)
+{
+@Html.Partial("ProductSummary", p)     @*DRY*@
+}
+
+@*This are the pages. PageLinks is an extension Method, it is located at /HtmlHelpers/PagingHelpers*@
+<div class="btn-group pull-right">
+    @Html.PageLinks(Model.PagingInfo, x => Url.Action("List", new { page = x, category=Model.CurrentCategory }))
+</div>
+@*List is an action method, page and category is a variable in the route.config, CurrentCategory is a property of ProductListViewModel*@
